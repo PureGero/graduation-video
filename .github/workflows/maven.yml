@@ -21,4 +21,5 @@ jobs:
     - name: Upload jar
       uses: actions/upload-artifact@v2
       with:
+        name: graduation-video.jar
         path: target/graduation-video-*.jar
