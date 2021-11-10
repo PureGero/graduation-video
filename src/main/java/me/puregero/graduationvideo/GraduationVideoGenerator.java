@@ -68,7 +68,7 @@ public class GraduationVideoGenerator extends Thread {
             System.out.println("Rendering photo " + index + " / " + photos.size());
 
             int finalIndex = index;
-            new GraduationVideoStage(photos, names, locations, index, imagePool, framesPerStage, (value) -> progress = 0.1 + 0.9 * (d * finalIndex + value * 2 * d)).renderFrames(encoder);
+            new GraduationVideoStage(photos, names, locations, index, imagePool, framesPerStage, (value) -> progress = d * finalIndex + value * 2 * d).renderFrames(encoder);
         }
 
         encoder.encodeImage(new GraduationVideoFrameRender(photos, names, locations, photos.size(), imagePool, 0).get());
@@ -101,7 +101,6 @@ public class GraduationVideoGenerator extends Thread {
         }
 
         while (!images.isEmpty()) {
-            progress = 0.1 * photos.size() / (images.size() + photos.size());
             BufferedImage image = images.remove().join();
             if (image != null) {
                 photos.add(image);
@@ -116,7 +115,5 @@ public class GraduationVideoGenerator extends Thread {
         Collections.shuffle(locations);
 
         System.out.println("Loaded photos (" + (System.currentTimeMillis() - time) + "ms)");
-
-        progress = 0.1;
     }
 }

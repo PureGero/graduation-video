@@ -34,6 +34,7 @@ public class GraduationVideo extends JFrame {
 
         GraduationVideoGenerator generator = new GraduationVideoGenerator(new File("."), FILE, 1920, 1080, DURATION, FPS);
         generator.start();
+        long startTime = System.currentTimeMillis();
 
         new Timer().schedule(new TimerTask() {
             @Override
@@ -42,6 +43,8 @@ public class GraduationVideo extends JFrame {
                 progressLabel.setText((int) (generator.getProgress() * 1000) / 10.0 + "%");
                 if (generator.getProgress() == 1) {
                     doneLabel.setText("Done!\nSaved to " + FILE);
+                } else if (generator.getProgress() > 0) {
+                    doneLabel.setText("Estimated time remaining: " + prettyTime((long) ((System.currentTimeMillis() - startTime) / generator.getProgress() * (1 - generator.getProgress()))));
                 }
                 repaint();
             }
@@ -58,5 +61,21 @@ public class GraduationVideo extends JFrame {
         pane.add(doneLabel, BorderLayout.SOUTH);
         pane.setPreferredSize(new Dimension(300, 100));
         getContentPane().add(pane);
+    }
+
+    private String p(long n, String s){
+        if(n != 1)return n + " " + s + "s";
+        return n + " " + s;
+    }
+
+    private String prettyTime(long millis){
+        long seconds = millis/1000;
+        if(seconds >= 60*60*24)
+            return p(seconds/60/60/24,"day") + " " + p((seconds/60/60)%24,"hr");
+        if(seconds >= 60*60)
+            return p(seconds/60/60,"hr") + " " + p((seconds/60)%60,"min");
+        if(seconds >= 60)
+            return p(seconds/60,"min") + " " + p((seconds)%60,"sec");
+        return p(seconds,"sec");
     }
 }
