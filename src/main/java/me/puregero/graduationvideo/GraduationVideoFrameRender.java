@@ -75,7 +75,7 @@ public class GraduationVideoFrameRender implements Supplier<BufferedImage> {
             int position = locations.get(index);
             int h = height * 3 / 5;
             int w = h * image.getWidth() / image.getHeight();
-            int dw = step > 1 ? 0 : (int) ((1 - step) * width);
+            int dw = step > 1 ? 0 : (int) ((1 - step) * width / 2);
             int cx = width / 4 - dw;
 
             if (step < 1) {
@@ -107,7 +107,7 @@ public class GraduationVideoFrameRender implements Supplier<BufferedImage> {
             int position = locations.get(index + 1);
             int h = height * 3 / 5;
             int w = h * image.getWidth() / image.getHeight();
-            int dw = step > 1 ? 0 : (int) ((1 - step) * width);
+            int dw = step > 1 ? 0 : (int) ((1 - step) * width / 2);
             int cx = width * 3 / 4 + dw;
 
             if (step < 1) {
